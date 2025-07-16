@@ -27,7 +27,7 @@ export default function Navbar() {
     if (parsedUser?.user_id) {
       setInfo(parsedUser.user_id);
     }
-    setCount(JSON.parse(localStorage.getItem("cart")).count);
+    setCount(JSON.parse(localStorage.getItem("cart"))?.count || 0);
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropdown(false);
