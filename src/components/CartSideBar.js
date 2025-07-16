@@ -9,21 +9,23 @@ import {
 import { useModal } from "@/context/ModalContext";
 import Image from "next/image";
 export default function CartSidebar() {
-  const { sidebarOpen, setSidebarOpen, setCount, count } = useModal();
+  const { sidebarOpen, setSidebarOpen, setCount, count ,info,} = useModal();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(localStorage.getItem("user"));
+
   const fetchitems = async () => {
-      if (!user?.user_id) {
+      if (!info) {
           setSidebarOpen(false);
           alert("Login to see your cart")
           return;
     }
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${user.user_id}/items`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${info}/items`
       );
       const data = await res.json();
+      console.log(data)
+      setCount(calculateCartItemCount(data));
       setItems(data);
     } catch (err) {
       console.error("Failed to fetch cart items:", err);
@@ -34,15 +36,20 @@ export default function CartSidebar() {
 
   const handleDelete = async (itemId) => {
     try {
-      const userId = localStorage.getItem("user");
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${user.user_id}/items/${itemId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${info}/items/${itemId}`,
         {
           method: "DELETE",
         }
       );
 
       if (response.status === 200) {
+        const itemToRemove =items.find((item) => item.id === itemId);
+
+        if (itemToRemove) {
+          // Subtract the quantity of the removed item from count
+          setCount((prevCount) => prevCount - itemToRemove.quantity);
+        }
         setItems((prev) => prev.filter((item) => item.id !== itemId));
       } else {
         console.error("Failed to delete item:", response.data);
@@ -57,7 +64,9 @@ export default function CartSidebar() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${user.user_id}/items/${itemId}?quantity=${newQuantity}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/users/${
+          info
+        }/items/${itemId}?quantity=${newQuantity}`,
         {
           method: "PUT",
           headers: {
@@ -68,6 +77,7 @@ export default function CartSidebar() {
       const updatedItem = await response.json();
       console.log(updatedItem);
       console.log(updatedItem.quantity);
+      setCount((prev)=>prev-quantity)
       setItems((prev) =>
         prev.map((item) =>
           item.id === itemId
@@ -83,7 +93,9 @@ export default function CartSidebar() {
     const createOrderFromCart = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/users/${user.user_id}/from-cart`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/users/${
+            info
+          }/from-cart`,
           {
             method: "POST",
             headers: {
@@ -97,7 +109,8 @@ export default function CartSidebar() {
           throw new Error(errorData.detail || "Failed to create order");
         }
 
-          const order = await response.json();
+        const order = await response.json();
+        setCount(0)
           setItems([])
           alert("Order placed successfully")
         console.log("Order created:", order);
@@ -112,9 +125,10 @@ export default function CartSidebar() {
   useEffect(() => {
     if (sidebarOpen) {
       fetchitems();
+      
     }
   }, [sidebarOpen]);
-
+  
   const subtotal = calculateCartTotal(items);
 
   return (
@@ -125,7 +139,7 @@ export default function CartSidebar() {
     >
       <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-xl font-semibold">
-          Cart ({calculateCartItemCount(items)})
+          Cart ({count})
         </h2>
         <button
           onClick={() => setSidebarOpen(false)}

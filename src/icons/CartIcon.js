@@ -1,5 +1,5 @@
 "use client"
-export default function CartIcon() {
+export default function CartIcon({count}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@ export default function CartIcon() {
         fontFamily="Arial"
         fill="white"
       >
-        { JSON.parse(localStorage.getItem("cart")).count}
+        {count}
       </text>
     </svg>
   );

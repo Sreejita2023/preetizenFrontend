@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useModal } from "../context/ModalContext";
-
 export default function LoginForm() {
-  const { closeModal, openModal ,setInfo} = useModal();
+  const { closeModal, openModal ,setInfo,setCount,info,} = useModal();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true)
 
   const handleLogin = async (e) => {
     e.preventDefault();

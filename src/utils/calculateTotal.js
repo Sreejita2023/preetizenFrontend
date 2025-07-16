@@ -10,9 +10,17 @@ export const calculateCartTotal = (items) => {
  }, 0);
 };
 
+// export const calculateCartItemCount = (items) => {
+  
+//   const count = items.reduce((total, item) => total + item.quantity, 0);
+//     const label = count === 1 ? "item" : "items";
+//     localStorage.setItem("cart", JSON.stringify({ count: count }));
+//   return `${count} ${label}`;
+// };
+
 export const calculateCartItemCount = (items) => {
   const count = items.reduce((total, item) => total + item.quantity, 0);
-    const label = count === 1 ? "item" : "items";
-    localStorage.setItem("cart", JSON.stringify({ count: count }));
-  return `${count} ${label}`;
+  const label = count === 1 ? "item" : "items";
+  localStorage.setItem("cart", JSON.stringify({ count: count }));
+  return count;
 };

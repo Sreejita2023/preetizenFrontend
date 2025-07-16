@@ -6,15 +6,17 @@ import { useModal } from "@/context/ModalContext";
 import { useState ,useRef,useEffect} from "react";
 import ProfileIcon from "@/icons/ProfileIcon";
 export default function Navbar() {
-  const { openModal, info, setInfo, setSidebarOpen ,count} = useModal();
+  const { openModal, info, setInfo, setSidebarOpen,count,setCount} = useModal();
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef();
- 
+
+  
   const handleLogout = () => {
     // Clear localStorage or session
     localStorage.removeItem("user");
     setInfo(null)
-    localStorage.setItem("cart", JSON.stringify({ count:0 }));
+    localStorage.setItem("cart", JSON.stringify({ count: 0 }));
+    setCount(0)
     // Optional: trigger page reload or redirect
     window.location.reload();
   };
@@ -25,6 +27,7 @@ export default function Navbar() {
     if (parsedUser?.user_id) {
       setInfo(parsedUser.user_id);
     }
+    setCount(JSON.parse(localStorage.getItem("cart")).count);
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setOpenDropdown(false);
@@ -58,7 +61,7 @@ export default function Navbar() {
         </div>
         <div className="absolute top-4 right-10 flex items-center gap-2">
           <div className="relative" onClick={() => setSidebarOpen(true)}>
-            <CartIcon />
+            <CartIcon count={count} />
           </div>
           {!info && (
             <span
