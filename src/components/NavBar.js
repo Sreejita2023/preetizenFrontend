@@ -9,8 +9,6 @@ export default function Navbar() {
   const { openModal, info, setInfo, setSidebarOpen,count,setCount} = useModal();
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef();
-
-  
   const handleLogout = () => {
     // Clear localStorage or session
     localStorage.removeItem("user");

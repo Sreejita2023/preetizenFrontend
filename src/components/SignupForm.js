@@ -21,8 +21,9 @@ export default function SignupForm() {
 
       if (res.ok) {
         const data = await res.json();
+         setInfo(data.id);
           console.log("Signup Success:", data);
-          setInfo(data.user_id);
+          
           localStorage.setItem(
             "user",
             JSON.stringify({ user_id: data.user_id })
