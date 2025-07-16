@@ -77,7 +77,7 @@ export default function CartSidebar() {
       const updatedItem = await response.json();
       console.log(updatedItem);
       console.log(updatedItem.quantity);
-      setCount((prev)=>prev-quantity)
+      setCount((prev) => prev - updatedItem.quantityy);
       setItems((prev) =>
         prev.map((item) =>
           item.id === itemId
