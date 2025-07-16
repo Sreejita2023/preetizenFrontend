@@ -9,9 +9,9 @@ export default function FilterSidebar({
   maxPrice = 2699,
   description,
 }) {
-  const [showPrice, setShowPrice] = useState(true);
-  const [showColor, setShowColor] = useState(true);
-  const [showSizes, setShowSizes] = useState(true);
+  const [showPrice, setShowPrice] = useState(false);
+  const [showColor, setShowColor] = useState(false);
+  const [showSizes, setShowSizes] = useState(false);
 
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
   const [selectedColor, setSelectedColor] = useState(null);

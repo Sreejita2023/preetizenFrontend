@@ -4,6 +4,7 @@ import Accordion from "@/components/Accordion";
 import sizes from "@/data/sizes.json";
 import Image from "next/image";
 import { useModal } from "@/context/ModalContext";
+import CollectionShimmer from "@/home/CollectionShimmer";
 export default function ProductPage({params}) {
 
   const { product } = use(params);
@@ -85,7 +86,7 @@ export default function ProductPage({params}) {
     setOpenAccordion(openAccordion === key ? null : key);
   };
 
-  if (!products) return <div className="p-10">Loading...</div>;
+  if (!products) return <div className="p-10"><CollectionShimmer/></div>;
 
   return (
     <div className="min-h-screen p-10 grid grid-cols-1 md:grid-cols-2 gap-10">

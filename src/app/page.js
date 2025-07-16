@@ -11,8 +11,8 @@ export default function Home() {
       <CollectionShowcase collection={"teezen-collection"} />
       <CollectionShowcase collection={"wildflower-collection"} />
       <Story />
-      <Features/>
-      <SignupWithImage/>
+      <Features />
+      <SignupWithImage />
     </div>
   );
 }

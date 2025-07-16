@@ -4,6 +4,7 @@ import { use,useEffect, useState } from "react";
 import FilterSidebar from "@/components/FilterSidebar";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
+import CollectionShimmer from "@/home/CollectionShimmer";
 export default function CollectionPage({ params }) {
    const { collection } = use(params);
   const [data, setData] = useState(null);
@@ -50,7 +51,7 @@ export default function CollectionPage({ params }) {
   }, []);
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return <div className="p-6"><CollectionShimmer/></div>;
   }
 
   if (error || !data) {

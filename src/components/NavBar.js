@@ -44,12 +44,14 @@ export default function Navbar() {
         <div className="mt-4 flex items-center gap-6 text-lg font-semibold text-gray-600">
           <span className="hover:text-black cursor-pointer">OUR STORY</span>
           <span className="border-l h-5" />
-          <CollectionLink name="T-Zen Collection" slug="teezen-collection" />
-          <span className="border-l h-5" />
           <CollectionLink
             name="Wildflower Collection"
             slug="wildflower-collection"
           />
+          <span className="border-l h-5" />
+          <span className="hover:text-black cursor-pointer uppercase">
+            T-Zen Collection
+          </span>
           <span className="border-l h-5" />
           <span className="hover:text-black cursor-pointer">BE OUR MODEL</span>
           <span className="border-l h-5" />
