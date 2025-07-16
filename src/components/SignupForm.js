@@ -26,7 +26,7 @@ export default function SignupForm() {
           
           localStorage.setItem(
             "user",
-            JSON.stringify({ user_id: data.user_id })
+            JSON.stringify({ user_id: data.id })
           );
         closeModal();
       } else {
